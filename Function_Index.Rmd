@@ -1,0 +1,248 @@
+---
+title: "Function Index"
+author: "Nathaniel Pritchard"
+date: "10/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The design of this document is to provide a brief desciption of each r package of focus in this class with a list of its most useful functions and where they appear. I cannot guarantee that all functions necessary to solve problems are associated with this class are included, but it was my best attempt. The references are associated with the notes created by Professor Bret Larget and Professor Jessi Kehe, I cannot guarentee that I have found every instance in the notes where each function appears. I apologize in advance for any inevitable mistakes.     
+
+# Base R  
+#### Functions
+- `str()`-Is the function that gives you the structure of the data. It specifically returns the column names, column types, and the first few rows of each row: **Lec03, Lec09b, Lec12b, Lec13**
+- `c()` - Is the function to create a vector to c stands for concatenate which is apt since it is taking a set of different entries and combining it into a single vector object: **Lec05, Lec06, Lec09a, Lec10, Lec11, Lec12, Lec13**
+
+# GGPLOT
+The ggplot package is the package to create graphs in R. It has drastically 
+improved the speed to add fine details to great looking graphs from what previously existed with base R. Creating a plot in ggplot will require the following general form:
+```{}
+data %>%
+ggplot(aes())+
+  geom_*()
+```
+You can additionally add other attributes such as titles, axis labels, change colors, ect by adding additional plus signs and calling the relevant functions.  
+
+#### Functions
+- `ggplot()` - The function that creates the canvas you will plot onto: **Lec03, Lec04, Lec05, Lec08, Lec10, Lec11, Lec13, Lec14**   
+- `aes()` - This is the function where you specify what **variables** (columns) you want to graph and **how they appear** on the graph. You will usually need an x variable and a y variable, but you can also do things like change color,shape,size based on variable values, **THIS SHOULD ONLY BE USED WHEN PLOTTING VARIABLES** , if you want an attribute to apply to everything it should be applied from within the geom_* function. As an example if you wanted all of your lines to be red you would have: 
+```{}
+data %>%
+ggplot(aes(x = var1, y = var2))+
+  geom_line(color = "red")
+```
+The Lectures this appears are: **Lec03, Lec04, Lec05, Lec08, Lec10, Lec11**   
+- `geom_line()` - Makes a line graph, one where the points are connected: **Lec03, Lec04, Lec05, Lec08**    
+
+- `geom_point()` - Makes a graph of points: **Lec03, Lec05, Lec10, Lec11, Lec14**   
+
+- `geom_bar()` - Makes a bar graph *only takes one categorical variable input* with that input it will count the number of observations in each category. If you include `color = somecategory` in the `aes()` the colors will be stacked on top of each other by default, if you want them to be side by side you need to use `position =  position_dodge2(preserve = "single")` inside the geom_bar function *not* in the aes() function (HW3 solution for example)   
+
+- `geom_col()` - Makes a bar graph takes a categorical variable as an x and a height for the bar as the y: **Lec11, Lec14**   
+
+- `geom_histogram()` -  Creates a histogram for a single specified numeric variable: **Lec03, Lec04, Lec05, Lec08, Lec10**   
+
+- `geom_density()` - Creates a density plot (smooth histogram): **Lec03, Lec04, Lec05**   
+
+- `geom_boxplot()` - Creates a boxplot: **Lec03, Lec04, Lec10, Lec11, Lec13**  
+
+- `geom_smooth()` - Creates a smooth line through the data: **Lec03, Lec04, Lec05, Lec08, Lec13**  
+
+- `geom_hline()` - Adds a horizontal line: **Lec05, Lec11**
+
+- `geom_abline()` - Adds a line with a user specified slope and intercept: **Lec10**
+
+- `ggtitle()` - Adds title to graph: **Lec03, Lec04, Lec05, Lec08, Lec10, Lec11, Lec13, Lec14**   
+
+- `xlab()` - Adds a label to the x-axis:  **Lec03, Lec04, Lec05, Lec08, Lec10, Lec11, Lec13, Lec14**  
+- `ylab()` - Adds a label to the y-axis:  **Lec03, Lec04, Lec05, Lec08, Lec10, Lec11, Lec13, Lec14**  
+- `theme()` - Theme can do a lot we have focused on rotaing axis labels: **Lec08, Lec11**  
+- `facet_wrap(~CategoricalVariable)` - Will make a graph for each level of CategoricalVariable: **Lec08, Lec10, Lec11**  
+
+# DPLYR  
+This is the set of functions that allow you to manipulate the data set, by changing the number of rows and or columns. These functions will be extremely useful throughout the class.  
+
+####  Functions
+- `filter()` - This function selects rows of a dataset based on a  boolean condition. Some potential boolean conditions are:
+
+  - `ColumnName == value` tests if rows of ColumnName match value exactly.   
+  
+  - `ColumnName <= value` tests if rows of ColumnName are less than or equal to value.  
+  
+  - `ColumnName < value` tests if rows of ColumnName are less than value.  
+  
+  - `ColumnName >= value` tests if rows of ColumnName are greater than or equal to value.  
+  
+  - `ColumnName > value` tests if rows of ColumnName are greater than value.  
+  
+  -  `is.na(ColumnName)` tests if the values in ColumnName are NA.  
+  
+  - `ColumnName %in% vector` tests if any of the rows of ColumnName are equal to the values in the column vector  
+  
+  - `!Condition` Inverts the meaning of any conditions.  
+  
+  - `Condition1 | Condition2` Tests if any  of the  rows  match  Condition1 or Condition2  
+  
+  - `Condition1 & Condition2` Tests if any  of the  rows  match  Condition1 and Condition2   
+  
+  Lectures that this can be found in are: **Lec06, Lec07, Lec08, Lec10, Lec11, Lec12a, Lec14**
+  
+- `select()` - Makes a data set including only columns listed in function. If you want to drop a column use `-columnName`: **Lec06, Lec07, Lec08, Lec10, Lec11, Lec12b, Lec13, Lec14**
+
+- `pull()` - Takes the values of a specified column and represents them as a vector. Differs from select which maintains the data structure as a tibble. Thus if you want a column to use as a vector call the pull function: **NA**
+
+- `slice()` — select rows by row number: **Lec09b, Lec09a, Lec11, Lec12b** 
+
+- `arrange()` — order rows based on a specified column:  **Lec06, Lec08, Lec11**
+
+- `desc()` — used inside of arrange() to specify the order in descending order of a variable: **Lec05, Lec06, Lec07, Lec08, Lec09b, Lec11**    
+
+- `mutate()` — add or change one or more variables(Columns): **Lec04, Lec05, Lec06, Lec07, Lec08, Lec09b, Lec10, Lec11, Lec12b, Lec13, Lec14**  
+
+- `reorder()` - This  function changes the behind the scenes ordering of a elements  of a column  by  a specified numeric column. It is usually  used inside of mutate. It is useful for changing the order bars appears in a bar graph: **Lec11**
+
+- `rename()` — change the name of a variable(Column): **Lec07, Lec06**   
+
+- `summarize()` — compute a table of summaries, a column will be created for each summary. Tip: Think about if the question is asking you to reduce the size of the dataset or simply add columns to differentiate its use from mutate:  **Lec05, Lec06, Lec07, Lec08, Lec09b,  Lec10, Lec11, Lec12b, Lec13, Lec14**  
+
+- `count()` - Returns the counts of the total number of entries in all combinations of factors for the specified columns. The counts will  be found 
+in  a  column named n: **Lec08, Lec06, Lec10**   
+
+
+- `drop_na()` - Drops the rows that have NA values. If you enter a column name it will only drop the rows with NA values for that column: **Lec05, Lec06, Lec07, Lec08, Lec13, Lec14**  
+
+
+- `group_by()` - Create groups based on values of observations being the same; often used prior to summarize() or mutate() with the effect that summaries are calculated by group(). Note that just running group by will not noticeably  change the dataset: **Lec05, Lec06, Lec07, Lec08, Lec09b,  Lec10, Lec11, Lec12b, Lec13, Lec14** 
+
+- `bind_cols()` - Combine two data frames that have the same observations by binding together columns: **NA**  
+
+- `bind_rows()` — Combine two data frame that have the same variables by binding together rows: **Lec12b**  
+
+- `left_join(dataset1,dataset2,by=c(col1))` or `right_join(dataset1,dataset2,by=c(col1))` - Joins two data sets together. If left_join is used all entries that appear in col1 of dataset1  will be kept and the columns of dataset2 will be added to dataset1  at those matching entries. If a value appears inn dataset2 but not datset1 that row  of dataset2 will be dropped. If a values appears in col1 in dataset1 but not dataset2 all the columns corresponding to dataset2 will have NAs appearing for  that value. The opposite is the case for right_join. More details in R4ds ch 13: **Lec06, Lec12a, Lec14**  
+
+- `inner_join(dataset1,dataset2,by=c(col1))` - An inner join keeps all cases present in both data sets  and cobines their columns: **Lec06,Lec12a**  
+
+- `full_join(dataset1,dataset2,by=c(col1))` - A full join keeps all cases from each data frame and combines columns: **Lec06, Lec12a**   
+
+- `anti_join(dataset1,dataset2,by=c(col1))` - returns all observations of dataset1 with a match in dataset2: **Lec12a**  
+
+- `semi_join(dataset1,dataset2,by=c(col1))` - returns all observations of dataset1 that do not have a match in dataset2: **Lec12a**
+
+# READR  
+This is the set of functions that is used  to read  in data files.   
+
+#### Functions  
+-  `read_csv()` - Will load any datasets that have commas separating the columns of the data: **Lec03, Lec04, Lec05, Lec06, Lec07, Lec08, Lec09a, Lec09b, Lec14**  
+
+
+- `read_tsv()`-  Will load any datasets that have tabs separating the columns of the data: **Lec09a**  
+
+- `read_excel` - Will load any excel files **Lec13**
+
+- `read_csv2()`- Will load Will load any datasets that have semicolons separating the columns of the data: **Lec09a**  
+
+- `read_delim()` - Using delim = "" to specify what separates the columns allows you  to read  in any delimited dataset: **Lec09a**  
+
+
+# Lubridate  
+The functions in this package allow you to deal with dates. For any date **not** in r format i.e. "yyyy-mm-dd" you need to first use the appropiate mdy, ymd, myd, or dmy function to get the date in the format before trying to extract information from that date.  
+
+#### Functions
+
+- `mdy()`- will take any date in "month day year" ordering and print it out in a standard  r date  format: **Lec06, Lec09a, Lec9b, Lec10, Lec12b**  
+
+- `ymd()`- will take any date in "year month day" ordering and print it out in a standard  r date  format: **Lec05, Lec06, Lec07, Lec09a, Lec11**   
+
+- `dmy()`- will take any date in "day month year" ordering and print it out in a standard  r date  format: **Lec09a**  
+
+- `myd()`- will take any date in "month year day" ordering and print it out in a standard  r date  format: **Lec09a**  
+
+- `month()`-Will return the month from a date, use "label = T" to get the month to be returned with a character label: **Lec06, Lec08, Lec9a, Lec10, Lec11, Lec12a**   
+
+- `day()`- Will return the day of the month from a date: **Lec08, Lec09a, Lec11**  
+
+- `wday()`- Will return the day of the week from a date, use "label = T" to get the month to be returned with a character label:**Lec11, Lec09a**  
+
+- `year()`- Will return the year from a date:  **Lec08, Lec09a**  
+
+- `hour()` - Will return the hour from a time:**NA**  
+
+- `minute()` - Will return the minute from a time:**NA**  
+
+- `second()` - Will return the second from a time:**NA**  
+
+# Tidyr  
+
+Tidyr exists because as much as we may want for it to be the case, most data is not tidy. By tidy we of course mean having one observation per row, each variable having its own column, and one value per cell. Thus when we are given untidy data we need some way to clean it up, and this is where the tidyr package comes in.   
+
+#### Functions   
+
+- `pivot_longer(columns2collapse, names_to = "ColumName", values_to = "column_name")` - When we have columns that can be better represented as values of a single variable, i.e. our data is wider than necessary, the pivot_longer function is useful for collapsing those multiple columns into two columns one with the column names in it and one with the values of those columns originally associated with those column names: **Lec12b** 
+
+- `pivot_wider(columns2split, names_from = "ColumName", values_from = "column_name")` - When we have a column whose entries we think would be better represented as their own columns we need an easy way to do this. The pivot_wider is the function used to do just that. Just specify the column you want to get the column names from and the column values from and r will do the rest: **Lec12b**   
+
+# StringR
+
+With most data being text data it is important to have a set of functions that can obtain useful information from this data. The key to these functions is a reliance on Regular Expressions which is simply a method of representing a general pattern. As example if you wanted to identify a name you would search for a general name with the regular expression "[A-Z][a-z]+ [A-Z][a-z]+", which is 
+searching for a capital letter followed by 1 or more lower case letters followed by a space and another capital letter followed by 1 or more lower case letters. This is much easier than having to generate every possible name.  
+
+## Common Regex  
+
+- | — or, match exactly one of the possibilities: can separate more than two chocies   
+- [] — one of, match one of the characters between the brackets  
+- [^]— anything but, match anything not between [^ and ]
+ranges — examples: [a-d], [0-5], [a-zA-Z]  
+
+### Anchors  
+- ^ — the start of the string  
+- $ — the end of the string  
+
+### Quantifiers  
+ How often does the previous character/group need to appear?  
+
+- ? — 0 or 1  
+
+- * — 0 or more  
+
+- + — 1 or more  
+
+- {n} — exactly n times  
+
+- {n,} — n or more  
+
+- {m,n} — form m to n times  
+
+### Special collections  
+
+- [:space:] — space, tab, newline
+- [:blank:] — space and tab
+- [:punct:] — a collection of punctuation characters
+- [:symbol:] — a collection of symbols
+- [:digit:] — a digit
+- [:lower:] — same as [a-z], a lower-case letter
+- [:upper:] — same as [A-Z], an upper-case letter
+- [:alpha:] — same as [a-zA-Z], [:lower:]|[:upper]
+- [:alnum:] — letter or number, [:alpha:]|[:digit:]
+- [:graph:] — punctuation, symbols, digits, letters
+same as [:punct:]|[:symbol:]|[:alnum:]
+. — matches any single character except for a newline  
+
+## Functions  
+
+- `separate(columntobeseparated, into=c("col1","col2"), sep = "separator")` - When you have a column with entries in a string format with entries like "thing1|thing2" that you would like to split into two separate columns you can use the Separate function. With this function all you have to do is specify the column you wish to separate, the column names for the columns that will result from this separation and a regular expression representing the pattern of characters that will be your separator. **Lec 17**  
+
+- `str_detect(string,regex)` - Will return true or false (Hint: Use with Filter) depending on if the string matches the regex pattern.**Lec15, Lec17**   
+
+- `str_count(string,regex)` - Will count number of occurences of a regex pattern within a string.**Lec15, Lec17**  
+
+- `str_sub(string,start,end)` - Will extract part of the string based on the specified number of characters with start and end both being integers.**Lec15, Lec17**   
+
+- `str_extract(string,regex)` - Will extract the part of a string matching a particular regex.**Lec15, Lec17**  
+
+- `str_c(...,{sep/collapse} = "separator")` - Will collapse separate stings into a single string. If the strings are in a vector, use the collapse option and specify what you what to go in between the collapsed string. If the entries are separate use the sep option rather than the collapse option.*Lec15, Lec17*    
+
+- `str_split(string,regex)` - Will split a string into separate entries everytime 'regex' is identified. WARNING:
+This will return entries as a list so if you want them to be in a vector format you must use the unlist(str_split()). *Lec15, Lec17*   
