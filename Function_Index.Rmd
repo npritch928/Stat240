@@ -191,7 +191,7 @@ searching for a capital letter followed by 1 or more lower case letters followed
 
 ## Common Regex  
 
-- | — or, match exactly one of the possibilities: can separate more than two chocies   
+- \| — or, match exactly one of the possibilities: can separate more than two chocies   
 - [] — one of, match one of the characters between the brackets  
 - [^]— anything but, match anything not between [^ and ]
 ranges — examples: [a-d], [0-5], [a-zA-Z]  
@@ -205,9 +205,9 @@ ranges — examples: [a-d], [0-5], [a-zA-Z]
 
 - ? — 0 or 1  
 
-- * — 0 or more  
+- \* — 0 or more  
 
-- + — 1 or more  
+- \+ — 1 or more  
 
 - {n} — exactly n times  
 
